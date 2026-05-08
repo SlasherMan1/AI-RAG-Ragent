@@ -15,42 +15,41 @@
  * limitations under the License.
  */
 
-package com.nageoffer.ai.ragent.mcp.protocol;
+package com.nageoffer.ai.ragent.rag.service.bo;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
- * JSON-RPC 2.0 错误对象
+ * 会话创建/更新业务对象
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class JsonRpcError {
+@Builder
+public class ConversationCreateBO {
 
     /**
-     * 方法不存在
+     * 会话ID
      */
-    public static final int METHOD_NOT_FOUND = -32601;
+    private String conversationId;
 
     /**
-     * 参数非法
+     * 用户ID
      */
-    public static final int INVALID_PARAMS = -32602;
+    private String userId;
 
     /**
-     * 服务器内部错误
+     * 用户问题
      */
-    public static final int INTERNAL_ERROR = -32603;
+    private String question;
 
     /**
-     * 错误码
+     * 最后更新时间
      */
-    private Integer code;
-
-    /**
-     * 错误消息
-     */
-    private String message;
+    private Date lastTime;
 }

@@ -15,37 +15,37 @@
  * limitations under the License.
  */
 
-package com.nageoffer.ai.ragent.mcp.core;
+package com.nageoffer.ai.ragent.rag.core.mcp;
+
+import io.modelcontextprotocol.spec.McpSchema.CallToolResult;
+import io.modelcontextprotocol.spec.McpSchema.Tool;
+
+import java.util.Map;
 
 /**
  * MCP 工具执行器接口
  */
-public interface MCPToolExecutor {
+public interface McpToolExecutor {
 
     /**
-     * 获取工具定义信息
-     * 返回该工具的元数据定义，包括工具ID、名称、描述、参数定义等信息
+     * 获取工具定义
      *
-     * @return 工具定义对象
+     * @return 工具元信息（使用官方 SDK 的 Tool）
      */
-    MCPToolDefinition getToolDefinition();
+    Tool getToolDefinition();
 
     /**
-     * 执行工具逻辑
-     * 根据传入的请求参数执行具体的工具逻辑，并返回执行结果
+     * 执行工具调用
      *
-     * @param request 工具执行请求，包含执行所需的参数
-     * @return 工具执行响应，包含执行结果和状态信息
+     * @param parameters 调用参数
+     * @return 工具调用结果（使用官方 SDK 的 CallToolResult）
      */
-    MCPToolResponse execute(MCPToolRequest request);
+    CallToolResult execute(Map<String, Object> parameters);
 
     /**
-     * 获取工具唯一标识
-     * 默认实现从工具定义中获取工具ID，用于标识和查找工具
-     *
-     * @return 工具唯一标识符
+     * 工具 ID（快捷方法）
      */
     default String getToolId() {
-        return getToolDefinition().getToolId();
+        return getToolDefinition().name();
     }
 }
