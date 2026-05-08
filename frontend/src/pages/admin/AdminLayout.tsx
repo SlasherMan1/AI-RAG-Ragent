@@ -195,7 +195,7 @@ export function AdminLayout() {
 
   useEffect(() => {
     let active = true;
-    fetch("https://api.github.com/repos/nageoffer/ragent")
+    fetch("https://api.github.com/repos/SlasherMan1/AI-RAG-Ragent")
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
         if (!active) return;
@@ -314,8 +314,10 @@ export function AdminLayout() {
   }, [location.pathname, location.search]);
 
   const avatarUrl = user?.avatar?.trim();
+  const isAdminChatUser = user?.username?.toLowerCase() === "admin";
   const showAvatar = Boolean(avatarUrl);
   const roleLabel = user?.role === "admin" ? "管理员" : "成员";
+  const displayUsername = isAdminChatUser ? "admin-slash" : user?.username || "管理员";
   const starLabel = useMemo(() => {
     if (starCount === null) return "--";
     if (starCount < 1000) return String(starCount);
@@ -440,7 +442,7 @@ export function AdminLayout() {
             <div className="admin-sidebar__logo">R</div>
             {!collapsed && (
               <div className="min-w-0">
-                <h1 className="admin-sidebar__title">Ragent AI 管理后台</h1>
+                <h1 className="admin-sidebar__title">AI RAG系统管理后台</h1>
                 <p className="admin-sidebar__subtitle">Knowledge Console</p>
               </div>
             )}
@@ -689,7 +691,7 @@ export function AdminLayout() {
                 返回聊天
               </Button>
               <a
-                href="https://github.com/nageoffer/ragent"
+                href="https://github.com/SlasherMan1/AI-RAG-Ragent"
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
@@ -709,17 +711,17 @@ export function AdminLayout() {
                     aria-label="用户菜单"
                   >
                     <Avatar
-                      name={user?.username || "管理员"}
+                      name={displayUsername}
                       src={showAvatar ? avatarUrl : undefined}
                       className="h-8 w-8 border-slate-200 bg-indigo-50 text-xs font-semibold text-indigo-600"
                     />
-                    <span className="hidden sm:inline">{user?.username || "管理员"}</span>
+                    <span className="hidden sm:inline">{displayUsername}</span>
                     <ChevronDown className="h-4 w-4 text-slate-400" />
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" sideOffset={8} className="w-44">
                   <div className="px-3 py-2 text-xs text-slate-500">
-                    {user?.username || "管理员"} · {roleLabel}
+                    {displayUsername} · {roleLabel}
                   </div>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => setPasswordOpen(true)}>
